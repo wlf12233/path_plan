@@ -4,7 +4,7 @@
 
 #ifndef GRID_H
 #define GRID_H
-#include <vector>
+#include "common.h"
 
 
 class Grid {

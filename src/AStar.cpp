@@ -4,10 +4,7 @@
 
 #include "AStar.h"
 #include "DirectedGraph.h"
-#include <memory>
-#include <queue>
-#include <unordered_map>
-#include <set>
+
 
 Node::Node(int _x, int _y, int _gcost, int _hcost, std::shared_ptr<Node> parent)
     : x(_x), y(_y), g_cost(_gcost), h_cost(_hcost), parent(std::move(parent)) {
@@ -86,10 +83,7 @@ std::optional<std::vector<std::pair<int, int> > > AStar::find_path_1(
     return std::nullopt;
 }
 
-std::optional<std::vector<std::pair<int, int> > > AStar::find_path_2(
-    const std::vector<std::vector<int> > &grid,
-    std::pair<int, int> start,
-    std::pair<int, int> goal) {
+std::optional<std::vector<std::pair<int, int> > > AStar::find_path_2(const std::vector<std::vector<int> > &grid,std::pair<int, int> start,std::pair<int, int> goal) {
     constexpr int dx[] = {-1, 1, 0, 0};
     constexpr int dy[] = {0, 0, 1, -1};
 
@@ -158,9 +152,11 @@ std::optional<std::vector<std::pair<int, int> > > AStar::find_path_2(
 
 std::vector<DirectedGraph::NodeId> find_path_3(
     const std::string &start, const std::string &goal) {
+
     auto heuristic = [&](const std::string &a, const std::string &b) {
         return std::abs(a[0] - goal[0]) + std::abs(a[1] - goal[1]);
-    };
+    };// 启发函数
+
     DirectedGraph graph = DirectedGraph();
     std::unordered_map<DirectedGraph::NodeId, DirectedGraph::NodeId> came_from; // 路径
     std::unordered_map<DirectedGraph::NodeId, double> g_score; // 从起点到某点的实际代价

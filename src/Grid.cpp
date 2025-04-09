@@ -3,7 +3,6 @@
 //
 
 #include "Grid.h"
-#include <iostream>
 
 Grid::Grid(int width, int height): width(width), height(height) {
     grid = std::vector(width, std::vector(height, 0));

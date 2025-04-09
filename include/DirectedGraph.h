@@ -5,9 +5,7 @@
 #ifndef DirectedGraph_H
 #define DirectedGraph_H
 
-#include <iostream>
-#include <string>
-#include <unordered_map>
+#include "common.h"
 
 class DirectedGraph {
 public:
@@ -44,7 +42,7 @@ public:
             current = came_from[current];
         }
         path.push_back(current);
-        std::reverse(path.begin(), path.end());
+        std::ranges::reverse(path);
         return path;
     }
 

@@ -5,12 +5,7 @@
 #ifndef SIPP_H
 #define SIPP_H
 
-#include <vector>
-#include <queue>
-#include <unordered_map>
-#include <limits>
-#include <cmath>
-#include <iostream>
+#include "common.h"
 
 using namespace std;
 

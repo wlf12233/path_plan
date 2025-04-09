@@ -5,15 +5,8 @@
 #ifndef ASTAR_H
 #define ASTAR_H
 
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <unordered_map>
-#include <cmath>
-#include <optional>
+#include "common.h"
 
-#include <algorithm>
-#include <functional>
 
 struct Node {
     int x, y; // 位置
@@ -36,10 +29,6 @@ public:
     using Heuristic = std::function<int(int, int, int, int)>;
 
     AStar(int rows, int cols, Heuristic heuristic);
-
-    // int operator+(const AStar &other) const {
-    //     return other.cols;
-    // }
 
     std::optional<std::vector<std::pair<int, int> > > find_path_1(
         const std::vector<std::vector<int> > &grid,
