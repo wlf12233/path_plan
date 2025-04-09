@@ -2,7 +2,7 @@
 // Created by seer on 2025/4/1.
 //
 
-#include "sipp1.h"
+#include "sipp.h"
 
 SIPP::SIPP(int width, int height): width(width), height(height) {
     grid.resize(width, vector<vector<SafeInterval> >(height));

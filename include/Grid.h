@@ -9,14 +9,31 @@
 
 class Grid {
 public:
-    Grid(int rows, int cols);
+    Grid(int width, int height);
 
-    void print();
+    // 设置障碍物，1表示障碍物
+    void setObstacle(int x, int y);
+
+    // 移除障碍物
+    void removeObstacle(int x, int y);
+
+    // 检查某个位置是否是障碍物
+    bool isObstacle(int x, int y) const;
+
+    // 检查位置是否有效（在地图内且不是障碍物）
+    bool isValid(int x, int y) const;
+
+    // 显示网格地图
+    void display() const;
+
+    // 获取网格地图的宽度和高度
+    int getWidth() const;
+    int getHeight() const;
 
     std::vector<std::vector<int> > getGrid() const;
 
 private:
-    int rows, cols;
+    int width, height;
     std::vector<std::vector<int> > grid;
 };
 
