@@ -17,5 +17,6 @@
 #include <optional>
 #include <algorithm>
 #include <functional>
+#include <chrono>
 
 #endif //COMMON_H

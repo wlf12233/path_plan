@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.30)
 project(path_plan VERSION 1.0)
 
 file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+file(GLOB TEST ${PROJECT_SOURCE_DIR}/test/*.cpp)
 # 设置 C++20 标准
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -18,7 +19,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 #target_include_directories(path_plan PRIVATE include)
 #include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_executable(path_plan ${SOURCES})
+add_executable(path_plan ${SOURCES} ${TEST})
 
 # 链接库
 target_include_directories(path_plan PUBLIC ${PROJECT_SOURCE_DIR}/include)

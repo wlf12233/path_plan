@@ -20,10 +20,10 @@ double DirectedGraph::getWeight(const NodeId &node1, const NodeId &node2) {
     return graph[node1][node2];
 }
 
-auto DirectedGraph::getNeighbors(const NodeId &node) {
+auto DirectedGraph::getNeighbors(const NodeId &node) -> std::unordered_map<NodeId, Weight> {
     return graph[node];
 }
 
-auto DirectedGraph::getGraph() {
+auto DirectedGraph::getGraph() -> const Graph {
     return graph;
 }

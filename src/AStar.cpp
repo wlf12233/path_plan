@@ -3,6 +3,7 @@
 //
 
 #include "AStar.h"
+#include "Grid.h"
 #include "DirectedGraph.h"
 
 

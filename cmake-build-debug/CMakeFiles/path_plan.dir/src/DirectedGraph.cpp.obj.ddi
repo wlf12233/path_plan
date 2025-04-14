@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "CMakeFiles\\path_plan.dir\\src\\DirectedGraph.cpp.obj",
+            "outputs": [
+                "D:\\path_plan\\cmake-build-debug\\vc140.pdb",
+                "CMakeFiles\\path_plan.dir\\src\\DirectedGraph.cpp.obj.ddi"
+            ],
+            "requires": []
+        }
+    ]
+}

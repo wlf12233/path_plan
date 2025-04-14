@@ -19,9 +19,9 @@ public:
 
     double getWeight(const NodeId &node1, const NodeId &node2);
 
-    auto getNeighbors(const NodeId &node);
+    auto getNeighbors(const NodeId &node) -> std::unordered_map<NodeId, Weight>;
 
-    auto getGraph();
+    auto getGraph() -> const Graph;
 
     void printGraph() {
         for (const auto &[fst, snd]: graph) {

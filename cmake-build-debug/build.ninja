@@ -103,24 +103,6 @@ build CMakeFiles\path_plan.dir\src\Grid.cpp.obj: CXX_COMPILER__path_plan_scanned
   TARGET_PDB = bin\path_plan.pdb
   dyndep = CMakeFiles/path_plan.dir/CXX.dd
 
-build CMakeFiles\path_plan.dir\src\main.cpp.obj.ddi: CXX_SCAN__path_plan_Debug D$:\path_plan\src\main.cpp || cmake_object_order_depends_target_path_plan
-  DEP_FILE = CMakeFiles\path_plan.dir\src\main.cpp.obj.ddi.d
-  DYNDEP_INTERMEDIATE_FILE = CMakeFiles\path_plan.dir\src\main.cpp.obj.ddi
-  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++20 -MDd -Zi
-  INCLUDES = -ID:\path_plan\include
-  OBJ_FILE = CMakeFiles\path_plan.dir\src\main.cpp.obj
-  PREPROCESSED_OUTPUT_FILE = CMakeFiles\path_plan.dir\src\main.cpp.obj.ddi.i
-
-build CMakeFiles\path_plan.dir\src\main.cpp.obj: CXX_COMPILER__path_plan_scanned_Debug D$:\path_plan\src\main.cpp | CMakeFiles\path_plan.dir\src\main.cpp.obj.modmap || cmake_object_order_depends_target_path_plan CMakeFiles\path_plan.dir\CXX.dd
-  DYNDEP_MODULE_MAP_FILE = CMakeFiles\path_plan.dir\src\main.cpp.obj.modmap
-  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++20 -MDd -Zi
-  INCLUDES = -ID:\path_plan\include
-  OBJECT_DIR = CMakeFiles\path_plan.dir
-  OBJECT_FILE_DIR = CMakeFiles\path_plan.dir\src
-  TARGET_COMPILE_PDB = CMakeFiles\path_plan.dir\
-  TARGET_PDB = bin\path_plan.pdb
-  dyndep = CMakeFiles/path_plan.dir/CXX.dd
-
 build CMakeFiles\path_plan.dir\src\sipp.cpp.obj.ddi: CXX_SCAN__path_plan_Debug D$:\path_plan\src\sipp.cpp || cmake_object_order_depends_target_path_plan
   DEP_FILE = CMakeFiles\path_plan.dir\src\sipp.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\path_plan.dir\src\sipp.cpp.obj.ddi
@@ -139,7 +121,43 @@ build CMakeFiles\path_plan.dir\src\sipp.cpp.obj: CXX_COMPILER__path_plan_scanned
   TARGET_PDB = bin\path_plan.pdb
   dyndep = CMakeFiles/path_plan.dir/CXX.dd
 
-build CMakeFiles\path_plan.dir\CXX.dd | D$:\path_plan\cmake-build-debug\CMakeFiles\path_plan.dir\CXXModules.json CMakeFiles\path_plan.dir\src\AStar.cpp.obj.modmap CMakeFiles\path_plan.dir\src\DirectedGraph.cpp.obj.modmap CMakeFiles\path_plan.dir\src\Grid.cpp.obj.modmap CMakeFiles\path_plan.dir\src\main.cpp.obj.modmap CMakeFiles\path_plan.dir\src\sipp.cpp.obj.modmap: CXX_DYNDEP__path_plan_Debug CMakeFiles\path_plan.dir\src\AStar.cpp.obj.ddi CMakeFiles\path_plan.dir\src\DirectedGraph.cpp.obj.ddi CMakeFiles\path_plan.dir\src\Grid.cpp.obj.ddi CMakeFiles\path_plan.dir\src\main.cpp.obj.ddi CMakeFiles\path_plan.dir\src\sipp.cpp.obj.ddi | D$:\path_plan\cmake-build-debug\CMakeFiles\path_plan.dir\CXXDependInfo.json
+build CMakeFiles\path_plan.dir\test\testAStarSimpleLinePath.cpp.obj.ddi: CXX_SCAN__path_plan_Debug D$:\path_plan\test\testAStarSimpleLinePath.cpp || cmake_object_order_depends_target_path_plan
+  DEP_FILE = CMakeFiles\path_plan.dir\test\testAStarSimpleLinePath.cpp.obj.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles\path_plan.dir\test\testAStarSimpleLinePath.cpp.obj.ddi
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++20 -MDd -Zi
+  INCLUDES = -ID:\path_plan\include
+  OBJ_FILE = CMakeFiles\path_plan.dir\test\testAStarSimpleLinePath.cpp.obj
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles\path_plan.dir\test\testAStarSimpleLinePath.cpp.obj.ddi.i
+
+build CMakeFiles\path_plan.dir\test\testAStarSimpleLinePath.cpp.obj: CXX_COMPILER__path_plan_scanned_Debug D$:\path_plan\test\testAStarSimpleLinePath.cpp | CMakeFiles\path_plan.dir\test\testAStarSimpleLinePath.cpp.obj.modmap || cmake_object_order_depends_target_path_plan CMakeFiles\path_plan.dir\CXX.dd
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles\path_plan.dir\test\testAStarSimpleLinePath.cpp.obj.modmap
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++20 -MDd -Zi
+  INCLUDES = -ID:\path_plan\include
+  OBJECT_DIR = CMakeFiles\path_plan.dir
+  OBJECT_FILE_DIR = CMakeFiles\path_plan.dir\test
+  TARGET_COMPILE_PDB = CMakeFiles\path_plan.dir\
+  TARGET_PDB = bin\path_plan.pdb
+  dyndep = CMakeFiles/path_plan.dir/CXX.dd
+
+build CMakeFiles\path_plan.dir\test\testSippSimpleLinePath.cpp.obj.ddi: CXX_SCAN__path_plan_Debug D$:\path_plan\test\testSippSimpleLinePath.cpp || cmake_object_order_depends_target_path_plan
+  DEP_FILE = CMakeFiles\path_plan.dir\test\testSippSimpleLinePath.cpp.obj.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles\path_plan.dir\test\testSippSimpleLinePath.cpp.obj.ddi
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++20 -MDd -Zi
+  INCLUDES = -ID:\path_plan\include
+  OBJ_FILE = CMakeFiles\path_plan.dir\test\testSippSimpleLinePath.cpp.obj
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles\path_plan.dir\test\testSippSimpleLinePath.cpp.obj.ddi.i
+
+build CMakeFiles\path_plan.dir\test\testSippSimpleLinePath.cpp.obj: CXX_COMPILER__path_plan_scanned_Debug D$:\path_plan\test\testSippSimpleLinePath.cpp | CMakeFiles\path_plan.dir\test\testSippSimpleLinePath.cpp.obj.modmap || cmake_object_order_depends_target_path_plan CMakeFiles\path_plan.dir\CXX.dd
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles\path_plan.dir\test\testSippSimpleLinePath.cpp.obj.modmap
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++20 -MDd -Zi
+  INCLUDES = -ID:\path_plan\include
+  OBJECT_DIR = CMakeFiles\path_plan.dir
+  OBJECT_FILE_DIR = CMakeFiles\path_plan.dir\test
+  TARGET_COMPILE_PDB = CMakeFiles\path_plan.dir\
+  TARGET_PDB = bin\path_plan.pdb
+  dyndep = CMakeFiles/path_plan.dir/CXX.dd
+
+build CMakeFiles\path_plan.dir\CXX.dd | D$:\path_plan\cmake-build-debug\CMakeFiles\path_plan.dir\CXXModules.json CMakeFiles\path_plan.dir\src\AStar.cpp.obj.modmap CMakeFiles\path_plan.dir\src\DirectedGraph.cpp.obj.modmap CMakeFiles\path_plan.dir\src\Grid.cpp.obj.modmap CMakeFiles\path_plan.dir\src\sipp.cpp.obj.modmap CMakeFiles\path_plan.dir\test\testAStarSimpleLinePath.cpp.obj.modmap CMakeFiles\path_plan.dir\test\testSippSimpleLinePath.cpp.obj.modmap: CXX_DYNDEP__path_plan_Debug CMakeFiles\path_plan.dir\src\AStar.cpp.obj.ddi CMakeFiles\path_plan.dir\src\DirectedGraph.cpp.obj.ddi CMakeFiles\path_plan.dir\src\Grid.cpp.obj.ddi CMakeFiles\path_plan.dir\src\sipp.cpp.obj.ddi CMakeFiles\path_plan.dir\test\testAStarSimpleLinePath.cpp.obj.ddi CMakeFiles\path_plan.dir\test\testSippSimpleLinePath.cpp.obj.ddi | D$:\path_plan\cmake-build-debug\CMakeFiles\path_plan.dir\CXXDependInfo.json
 
 
 # =============================================================================
@@ -149,7 +167,7 @@ build CMakeFiles\path_plan.dir\CXX.dd | D$:\path_plan\cmake-build-debug\CMakeFil
 #############################################
 # Link the executable bin\path_plan.exe
 
-build bin\path_plan.exe: CXX_EXECUTABLE_LINKER__path_plan_Debug CMakeFiles\path_plan.dir\src\AStar.cpp.obj CMakeFiles\path_plan.dir\src\DirectedGraph.cpp.obj CMakeFiles\path_plan.dir\src\Grid.cpp.obj CMakeFiles\path_plan.dir\src\main.cpp.obj CMakeFiles\path_plan.dir\src\sipp.cpp.obj
+build bin\path_plan.exe: CXX_EXECUTABLE_LINKER__path_plan_Debug CMakeFiles\path_plan.dir\src\AStar.cpp.obj CMakeFiles\path_plan.dir\src\DirectedGraph.cpp.obj CMakeFiles\path_plan.dir\src\Grid.cpp.obj CMakeFiles\path_plan.dir\src\sipp.cpp.obj CMakeFiles\path_plan.dir\test\testAStarSimpleLinePath.cpp.obj CMakeFiles\path_plan.dir\test\testSippSimpleLinePath.cpp.obj
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -MDd -Zi
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib

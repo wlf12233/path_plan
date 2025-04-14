@@ -1,6 +1,3 @@
-//
-// Created by seer on 2025/4/1.
-//
 
 #ifndef SIPP_H
 #define SIPP_H
@@ -10,16 +7,16 @@
 using namespace std;
 
 struct SafeInterval {
-    double start, end;
+    double start, end; // 安全时间区间：[start, end]
 };
 
 struct State {
-    int x, y;
-    double t;
-    int intervalIdx;
-    double g, h;
+    int x, y; // 位置坐标
+    double t; // 当前到达时间（在 safe interval 内）
+    int intervalIdx; // 当前所在 safe interval 的索引
+    double g, h; // 从起点到当前状态的实际代价（时间） 启发式估计，从当前到目标的时间
 
-    bool operator>(const State &s) const {
+    bool operator > (const State &s) const {
         return (g + h) > (s.g + s.h);
     }
 };
@@ -30,7 +27,7 @@ public:
 
     void addSafeInterval(int x, int y, double start, double end);
 
-    std::vector<std::pair<int, int> > findPath(std::pair<int, int> start, std::pair<int, int> goal);
+    std::vector<tuple<int,int,double>> findPath(std::pair<int, int> start, std::pair<int, int> goal);
 
 private:
     int width, height;
