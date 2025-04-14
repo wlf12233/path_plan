@@ -19,7 +19,10 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 #target_include_directories(path_plan PRIVATE include)
 #include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_executable(path_plan ${SOURCES} ${TEST})
+add_executable(path_plan ${SOURCES} ${TEST}
+        include/Types.h
+        src/CBS.cpp
+        include/CBS.h)
 
 # 链接库
 target_include_directories(path_plan PUBLIC ${PROJECT_SOURCE_DIR}/include)
