@@ -5,6 +5,7 @@
 	"compiler-simulate-id" : "",
 	"config" : "Debug",
 	"cxx-modules" : {},
+	"database-info" : null,
 	"dir-cur-bld" : "D:/path_plan/cmake-build-debug",
 	"dir-cur-src" : "D:/path_plan",
 	"dir-top-bld" : "D:/path_plan/cmake-build-debug",
@@ -17,5 +18,43 @@
 	],
 	"language" : "CXX",
 	"linked-target-dirs" : [],
-	"module-dir" : "D:/path_plan/cmake-build-debug/CMakeFiles/path_plan.dir"
+	"module-dir" : "D:/path_plan/cmake-build-debug/CMakeFiles/path_plan.dir",
+	"sources" : 
+	{
+		"CMakeFiles/path_plan.dir/src/AStar.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "D:/path_plan/src/AStar.cpp"
+		},
+		"CMakeFiles/path_plan.dir/src/CBS.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "D:/path_plan/src/CBS.cpp"
+		},
+		"CMakeFiles/path_plan.dir/src/DirectedGraph.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "D:/path_plan/src/DirectedGraph.cpp"
+		},
+		"CMakeFiles/path_plan.dir/src/Grid.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "D:/path_plan/src/Grid.cpp"
+		},
+		"CMakeFiles/path_plan.dir/src/sipp.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "D:/path_plan/src/sipp.cpp"
+		},
+		"CMakeFiles/path_plan.dir/test/testAStarSimpleLinePath.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "D:/path_plan/test/testAStarSimpleLinePath.cpp"
+		},
+		"CMakeFiles/path_plan.dir/test/testSippSimpleLinePath.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "D:/path_plan/test/testSippSimpleLinePath.cpp"
+		}
+	}
 }

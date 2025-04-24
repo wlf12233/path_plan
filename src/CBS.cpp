@@ -12,7 +12,7 @@ CBS::CBS(const std::vector<std::pair<int, int> > &starts, const std::vector<std:
 }
 
 std::optional<std::vector<Path> > CBS::solve() {
-    std::priority_queue<CBSNode, std::vector<CBSNode>, std::greater<CBSNode> > pq;
+    std::priority_queue<CBSNode, std::vector<CBSNode>, std::greater<> > pq;
     CBSNode root;
     root.cost = 0;
     for (int i = 0; i < starts.size(); i++) {
@@ -49,6 +49,30 @@ std::optional<std::vector<Path> > CBS::solve() {
 }
 
 std::optional<Conflict> CBS::findConflict(const std::vector<Path> &paths) {
+    int max_len = 0;
+    for (const auto &p: paths) {
+        max_len = std::max(max_len, static_cast<int>(p.size()));
+    }
+    for (int t = 0; t < max_len; t++) {
+        for (int i = 0; i < paths.size(); ++i) {
+            int x1 = t < paths[i].size() ? paths[i][t].first : paths[i].back().first;
+            int y1 = t < paths[i].size() ? paths[i][t].second : paths[i].back().second;
+            int x1_next = t + 1 < paths.size() ? paths[i][t + 1].first : paths[i].back().first;
+            int y1_next = t + 1 < paths.size() ? paths[i][t + 1].second : paths[i].back().second;
+            for (int j = i + 1; j < paths.size(); ++j) {
+                int x2 = t < paths[j].size() ? paths[j][t].first : paths[j].back().first;
+                int y2 = t < paths[j].size() ? paths[j][t].second : paths[j].back().second;
+                int x2_next = t + 1 < paths.size() ? paths[j][t + 1].first : paths[j].back().first;
+                int y2_next = t + 1 < paths.size() ? paths[j][t + 1].second : paths[j].back().second;
+                if (x1 == x2 && y1 == y2) {
+                    return Conflict(i, j, x1, y1, t);
+                }
+                if (x1_next == x2 && y1_next == y2 && x2 == x1_next && y2 == y1_next) {
+                    return Conflict(i, j, x1, y1, t + 1);
+                }
+            }
+        }
+    }
 }
 
 Path CBS::aStarWithConstrains(int agent, const std::pair<int, int> &start, const std::pair<int, int> &goal,
