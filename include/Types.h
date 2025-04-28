@@ -28,7 +28,7 @@ struct Conflict {
     int x, y;
     int time;
 
-    Conflict(int agent1, int agent2, int x, int y, int time) : agent1(agent1), agent2(agent2), x(x), y(y) {
+    Conflict(int agent1, int agent2, int x, int y, int time) : agent1(agent1), agent2(agent2), x(x), y(y), time(time) {
     }
 };
 

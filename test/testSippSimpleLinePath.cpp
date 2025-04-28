@@ -32,7 +32,7 @@ void testSippSimpleLinePath() {
     }
 }
 
-int main(int argc, char *argv[]) {
-    testSippSimpleLinePath();
-    return 0;
-}
+// int main(int argc, char *argv[]) {
+//     testSippSimpleLinePath();
+//     return 0;
+// }

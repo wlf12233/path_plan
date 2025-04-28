@@ -3,6 +3,7 @@
 //
 
 #include "CBS.h"
+#include "AStar.h"
 
 CBS::CBS(const std::vector<std::pair<int, int> > &starts, const std::vector<std::pair<int, int> > &goals,
          const std::vector<std::vector<int> > &map)
@@ -29,6 +30,7 @@ std::optional<std::vector<Path> > CBS::solve() {
         pq.pop();
 
         auto conflict = findConflict(node.paths);
+
         if (!conflict.has_value()) {
             return node.paths;
         }
@@ -67,14 +69,26 @@ std::optional<Conflict> CBS::findConflict(const std::vector<Path> &paths) {
                 if (x1 == x2 && y1 == y2) {
                     return Conflict(i, j, x1, y1, t);
                 }
-                if (x1_next == x2 && y1_next == y2 && x2 == x1_next && y2 == y1_next) {
+                if (x1_next == x2 && y1_next == y2 && x2_next == x1 && y2_next == y1) {
                     return Conflict(i, j, x1, y1, t + 1);
                 }
             }
         }
     }
+    return std::nullopt;
 }
 
 Path CBS::aStarWithConstrains(int agent, const std::pair<int, int> &start, const std::pair<int, int> &goal,
                               std::vector<Constraint> &constraints) {
+    AStar a_star(map.size(), map[0].size(), manhattan);
+    auto res_path = a_star.find_path_with_constrains(agent, map, start, goal, constraints);
+    return res_path.value();
+}
+
+int CBS::computeTotalCost(const std::vector<Path> &paths) {
+    int total = 0;
+    for (auto pairs: paths) {
+        total++;
+    }
+    return total;
 }

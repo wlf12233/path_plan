@@ -84,7 +84,8 @@ std::optional<std::vector<std::pair<int, int> > > AStar::find_path_1(
     return std::nullopt;
 }
 
-std::optional<std::vector<std::pair<int, int> > > AStar::find_path_2(const std::vector<std::vector<int> > &grid,std::pair<int, int> start,std::pair<int, int> goal) {
+std::optional<std::vector<std::pair<int, int> > > AStar::find_path_2(const std::vector<std::vector<int> > &grid, std::pair<int, int> start,
+                                                                     std::pair<int, int> goal) {
     constexpr int dx[] = {-1, 1, 0, 0};
     constexpr int dy[] = {0, 0, 1, -1};
 
@@ -153,10 +154,9 @@ std::optional<std::vector<std::pair<int, int> > > AStar::find_path_2(const std::
 
 std::vector<DirectedGraph::NodeId> find_path_3(
     const std::string &start, const std::string &goal) {
-
     auto heuristic = [&](const std::string &a, const std::string &b) {
         return std::abs(a[0] - goal[0]) + std::abs(a[1] - goal[1]);
-    };// 启发函数
+    }; // 启发函数
 
     DirectedGraph graph = DirectedGraph();
     std::unordered_map<DirectedGraph::NodeId, DirectedGraph::NodeId> came_from; // 路径
@@ -168,7 +168,7 @@ std::vector<DirectedGraph::NodeId> find_path_3(
         f_score[node] = std::numeric_limits<double>::infinity();
     }
     g_score[start] = 0.0;
-    f_score[start] = heuristic(start, goal) ;
+    f_score[start] = heuristic(start, goal);
 
     using PQElement = std::pair<double, DirectedGraph::NodeId>;
     std::priority_queue<PQElement, std::vector<PQElement>, std::greater<> > open_list;
@@ -191,4 +191,66 @@ std::vector<DirectedGraph::NodeId> find_path_3(
         }
     }
     return {};
+}
+
+std::optional<std::vector<std::pair<int, int> > > AStar::find_path_with_constrains(const int agent,
+                                                                                   const std::vector<std::vector<int> > &map,
+                                                                                   const std::pair<int, int> &start,
+                                                                                   const std::pair<int, int> &goal,
+                                                                                   const std::vector<Constraint> &constraints) {
+    constexpr int dx[] = {-1, 1, 0, 0};
+    constexpr int dy[] = {0, 0, 1, -1};
+
+    // std::vector visited(rows, std::vector(cols, false));
+
+    std::set<std::tuple<int, int, int> > visited;
+
+    std::priority_queue<std::shared_ptr<Node>, std::vector<std::shared_ptr<Node> >, CompareNode> open_list;
+    const auto start_node = std::make_shared<Node>(start.first, start.second, 0,
+                                                   heuristic(start.first, start.second, goal.first, goal.second));
+    open_list.push(start_node);
+    while (!open_list.empty()) {
+        auto cur_node = open_list.top();
+        open_list.pop();
+        const int cur_time = cur_node->g_cost;
+        if (visited.count({cur_node->x, cur_node->y, cur_node->g_cost})) {
+            continue;
+        }
+        visited.insert({cur_node->x, cur_node->y, cur_node->g_cost});
+
+        if (goal.first == cur_node->x && goal.second == cur_node->y) {
+            std::vector<std::pair<int, int> > path;
+            while (cur_node) {
+                path.emplace_back(cur_node->x, cur_node->y);
+                cur_node = cur_node->parent;
+            }
+            std::ranges::reverse(path);
+            return path;
+        }
+        for (int i = 0; i < 4; i++) {
+            int next_x = cur_node->x + dx[i];
+            int next_y = cur_node->y + dy[i];
+            int next_tim = cur_time + 1;
+            if (next_x < 0 || next_y < 0 || next_x >= rows || next_y >= cols || map[next_x][next_y] == 1) {
+                continue;
+            }
+            bool constraint_found = false;
+            if (!constraints.empty()) {
+                for (auto [robot, x, y, time]: constraints) {
+                    if (agent == robot && next_x == x && next_y == y && next_tim == time) {
+                        constraint_found = true;
+                        break;
+                    }
+                }
+            }
+            if (constraint_found) {
+                continue;
+            }
+            int g_new_cost = cur_node->g_cost + 1;
+            auto neighbor = std::make_shared<Node>(next_x, next_y, g_new_cost, heuristic(next_x, next_y, goal.first, goal.second),
+                                                   cur_node);
+            open_list.push(neighbor);
+        }
+    }
+    return std::nullopt;
 }

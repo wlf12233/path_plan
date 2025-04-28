@@ -51,6 +51,11 @@
 			"language" : "CXX",
 			"source" : "D:/path_plan/test/testAStarSimpleLinePath.cpp"
 		},
+		"CMakeFiles/path_plan.dir/test/testCBSSimpleLinePath.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "D:/path_plan/test/testCBSSimpleLinePath.cpp"
+		},
 		"CMakeFiles/path_plan.dir/test/testSippSimpleLinePath.cpp.obj" : 
 		{
 			"language" : "CXX",

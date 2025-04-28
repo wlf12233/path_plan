@@ -6,6 +6,7 @@
 #define ASTAR_H
 
 #include "common.h"
+#include "Types.h"
 
 
 struct Node {
@@ -42,6 +43,11 @@ public:
 
     std::optional<std::vector<std::pair<int, int> > > find_path_3(
         const std::string &start, const std::string &goal);
+
+    std::optional<std::vector<std::pair<int, int> > > find_path_with_constrains(int agent,const std::vector<std::vector<int> > &map,
+                                                                                const std::pair<int, int> &start,
+                                                                                const std::pair<int, int> &goal,
+                                                                                const std::vector<Constraint> &constraints);
 
 private:
     int rows, cols;
