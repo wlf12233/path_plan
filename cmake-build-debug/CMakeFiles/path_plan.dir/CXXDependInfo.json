@@ -46,6 +46,21 @@
 			"language" : "CXX",
 			"source" : "D:/path_plan/src/sipp.cpp"
 		},
+		"CMakeFiles/path_plan.dir/test/auto_ptr1.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "D:/path_plan/test/auto_ptr1.cpp"
+		},
+		"CMakeFiles/path_plan.dir/test/recur.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "D:/path_plan/test/recur.cpp"
+		},
+		"CMakeFiles/path_plan.dir/test/sort.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "D:/path_plan/test/sort.cpp"
+		},
 		"CMakeFiles/path_plan.dir/test/testAStarSimpleLinePath.cpp.obj" : 
 		{
 			"language" : "CXX",
