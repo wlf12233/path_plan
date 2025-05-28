@@ -10,14 +10,15 @@ int main(int argc, char *argv[]) {
     g.addEdge(1, 3, 2);
     g.addEdge(2, 3, 3);
     g.addEdge(3, 4, 1);
-    auto [dist,prev] = g.dijkstra2(0);
+    auto [dist, prev] = g.dijkstra2(1);
     int target = 4;
-    auto path = g.reconstructPath(0,target,prev);
-    std::cout<<"2"<<std::endl;
-
+    auto path = g.reconstructPath(1,target,prev);
     std::cout << "Path from 0 to " << target << ": ";
     for (int node : path) {
         std::cout << node << " ";
     }
+//    for (const auto &item: dist) {
+//        std::cout << item << std::endl;
+//    }
     std::cout << "\nDistance: " << dist[target] << "\n";
 }

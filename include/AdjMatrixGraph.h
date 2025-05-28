@@ -38,7 +38,7 @@ public:
         dist[source] = 0.0;
 
         using PDI = std::pair<double, int>;
-        std::priority_queue<PDI, std::vector<PDI>, std::greater<> > pq;
+        std::priority_queue<PDI, std::vector<PDI>, std::greater<>> pq;
         pq.emplace(0.0, source);
         while (!pq.empty()) {
             auto [d,u] = pq.top();
@@ -51,7 +51,7 @@ public:
                 int weight = adj[u][v];
                 if (weight < INF && weight + dist[u] < dist[v]) {
                     dist[v] = weight + dist[u];
-                    pq.emplace(weight, v);
+                    pq.emplace(dist[v], v);
                 }
             }
         }
@@ -60,9 +60,9 @@ public:
 
     //返回从 src 到其他节点的最短距离和具体路径
     std::pair<std::vector<double>, std::vector<int> > dijkstra2(int source) const {
-        std::vector dist(V, INF); //最短距离初始化为无穷大
-        std::vector visited(V, false); //标记是否已经访问
-        std::vector pred(V, -1); //记录的路径
+        std::vector<double> dist(V, INF); //最短距离初始化为无穷大
+        std::vector<bool> visited(V, false); //标记是否已经访问
+        std::vector<int> pred(V, -1); //记录的路径
         dist[source] = 0.0;
 
         using PDI = std::pair<double, int>;
@@ -76,7 +76,7 @@ public:
             }
             visited[u] = true;
             for (int v = 0; v < V; v++) {
-                int weight = adj[u][v];
+                double weight = adj[u][v];
                 if (weight < INF && weight + dist[u] < dist[v]) {
                     dist[v] = weight + dist[u];
                     pred[v] = u; //记录前驱节点
@@ -91,11 +91,10 @@ public:
         std::vector<int> path;
         while (dest != -1) {
             path.push_back(dest);
-            if (prev[dest] == source) {
-                break;
-            }
+//            if (dest == source) {
+//                break;
+//            }
             dest = prev[dest];
-            // std::cout<<dest<<" ";
         }
         // for (int at = dest; at != -1; at = prev[at]) {
         //     path.push_back(at);
