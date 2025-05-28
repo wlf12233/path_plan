@@ -47,7 +47,7 @@ public:
     std::optional<std::vector<std::pair<int, int> > > find_path_with_constrains(int agent,const std::vector<std::vector<int> > &map,
                                                                                 const std::pair<int, int> &start,
                                                                                 const std::pair<int, int> &goal,
-                                                                                const std::vector<Constraint> &constraints);
+                                                                                const std::vector<Constraint> &constraints) const;
 
 private:
     int rows, cols;

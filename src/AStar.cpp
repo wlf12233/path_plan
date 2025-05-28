@@ -197,7 +197,7 @@ std::optional<std::vector<std::pair<int, int> > > AStar::find_path_with_constrai
                                                                                    const std::vector<std::vector<int> > &map,
                                                                                    const std::pair<int, int> &start,
                                                                                    const std::pair<int, int> &goal,
-                                                                                   const std::vector<Constraint> &constraints) {
+                                                                                   const std::vector<Constraint> &constraints) const {
     constexpr int dx[] = {-1, 1, 0, 0};
     constexpr int dy[] = {0, 0, 1, -1};
 

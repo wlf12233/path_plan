@@ -37,8 +37,8 @@ class Resource {
     ~Resource() { std::cout << "Resource destroyed\n"; }
 
 };
-int main() {
-    Auto_ptr1<Resource> resource(new Resource());
-    Auto_ptr1<Resource> resource2 = resource;
-    return 0;
-}
+// int main() {
+//     Auto_ptr1<Resource> resource(new Resource());
+//     Auto_ptr1<Resource> resource2 = resource;
+//     return 0;
+// }
