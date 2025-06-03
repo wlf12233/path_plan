@@ -87,6 +87,24 @@ public:
         return std::make_pair(dist, pred);
     }
 
+    void dijkstraConstrct(int source, std::vector<std::vector<double> > &dist, std::vector<std::vector<int> > &pred) {
+        dist[source][source] = 0.0;
+        using PDI = std::pair<double, int>;
+        std::priority_queue<PDI, std::vector<PDI>, std::greater<> > pq;
+        pq.emplace(0.0, source);
+        while (!pq.empty()) {
+            auto [d,u] = pq.top();
+            pq.pop();
+            for (const double edge: adj[u]) {
+                if (dist[source][edge] > dist[source][u] + adj[source][u]) {
+                    dist[source][edge] = dist[source][u] + adj[source][u];
+                    pred[source][edge] = u;
+                    pq.emplace(dist[source][edge], edge);
+                }
+            }
+        }
+    }
+
     std::vector<int> reconstructPath(int source, int dest, std::vector<int> &prev) const {
         std::vector<int> path;
         while (dest != -1) {
