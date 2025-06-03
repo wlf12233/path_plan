@@ -76,7 +76,7 @@ public:
             }
             visited[u] = true;
             for (int v = 0; v < V; v++) {
-                int weight = adj[u][v];
+                double weight = adj[u][v];
                 if (weight < INF && weight + dist[u] < dist[v]) {
                     dist[v] = weight + dist[u];
                     pred[v] = u; //记录前驱节点
