@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <functional>
 #include <queue>
+#include <ranges>
 using namespace std;
 
 class Graph {
@@ -68,5 +69,77 @@ public:
             }
         }
         return res;
+    }
+
+    bool canFinish(int numCourses, vector<vector<int> > &prerequisites) {
+        vector<int> indegree(numCourses, 0);
+        vector<vector<int> > adj(numCourses);
+        for (auto prerequisite: prerequisites) {
+            adj[prerequisite[1]].push_back(prerequisite[0]);
+            indegree[prerequisite[0]]++;
+        }
+        queue<int> q;
+        for (int i = 0; i < indegree.size(); i++) {
+            if (indegree[i] == 0) {
+                q.push(i);
+            }
+        }
+        vector<int> ans;
+        while (!q.empty()) {
+            int cur = q.front();
+            q.pop();
+            ans.push_back(cur);
+            for (auto neighbour: adj[cur]) {
+                indegree[neighbour]--;
+                if (indegree[neighbour] == 0) {
+                    q.push(neighbour);
+                }
+            }
+        }
+        if (ans.size() != numCourses) {
+            return false;
+        }
+        return true;
+    }
+
+    vector<int> findOrder(int numCourses, vector<vector<int> > &prerequisites) {
+        vector<int> indegree(numCourses, 0);
+        vector<vector<int> > adj(numCourses);
+        for (auto prerequisite: prerequisites) {
+            adj[prerequisite[1]].push_back(prerequisite[0]);
+            indegree[prerequisite[0]]++;
+        }
+        vector<bool> visited(numCourses, false);
+        vector<bool> onPath(numCourses, false); // 标记当前路径
+        vector<int> ans;
+        bool hasCycle = false;
+
+        function<void(int)> dfs = [&](int i) {
+            if (onPath[i]) {
+                hasCycle = true;
+                return;
+            }
+            if (visited[i]||hasCycle) {
+                return;
+            }
+            visited[i] = true;
+            onPath[i] = true;
+            for (auto neighbour: adj[i]) {
+                dfs(neighbour);
+            }
+            onPath[i] = false;
+            ans.push_back(i);
+        };
+        for (int i = 0; i < numCourses; i++) {
+            if (!visited[i]) {
+                dfs(i);
+            }
+        }
+        if (hasCycle) {
+            return {};
+        }
+        ranges::reverse(ans);
+
+        return ans;
     }
 };
