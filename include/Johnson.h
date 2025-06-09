@@ -55,6 +55,38 @@ public:
         return true;
     }
 
+    bool SPFA(int src, std::vector<std::vector<Edge> > &adj, std::vector<double> &dist) {
+        const int n = adj.size();
+        dist.assign(n, INF);
+        std::vector<int> cnt{n, 0};
+        std::vector<bool> in_queue(n, false);
+        std::queue<int> q;
+
+        dist[src] = 0;
+        q.push(src);
+        in_queue[src] = true;
+        cnt[src]++;
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
+            in_queue[u] = true;
+            for (auto [f,v,w]: adj[u]) {
+                if (dist[u] + w < dist[f]) {
+                    dist[f] = dist[u] + w;
+                    if (!in_queue[f]) {
+                        q.push(f);
+                        in_queue[f] = true;
+                        cnt[f]++;
+                        if (cnt[f] > n) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     // 执行 Dijkstra 算法计算从源点 src 出发的最短路径（Johnson算法中的 Dijkstra）
     // adj 是重标定后的图（权值已被调整，全部为非负）
     // h 是通过 Bellman-Ford 得到的势函数，用于恢复原图中的最短路径距离

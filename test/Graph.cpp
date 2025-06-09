@@ -119,7 +119,7 @@ public:
                 hasCycle = true;
                 return;
             }
-            if (visited[i]||hasCycle) {
+            if (visited[i] || hasCycle) {
                 return;
             }
             visited[i] = true;
@@ -141,5 +141,91 @@ public:
         ranges::reverse(ans);
 
         return ans;
+    }
+
+    int nearestExit(vector<vector<char> > &maze, vector<int> &entrance) {
+        const vector<int> dx{1, -1, 0, 0};
+        const vector<int> dy{0, 0, 1, -1};
+        int m = maze.size(), n = maze[0].size();
+        int res = 0;
+        queue<pair<int, int> > q;
+        q.push({entrance[0], entrance[1]});
+
+        maze[entrance[0]][entrance[1]] = '+';
+
+        while (!q.empty()) {
+            int size = q.size();
+            for (int j = 0; j < size; j++) {
+                auto [x,y] = q.front();
+                q.pop();
+
+                if ((x != entrance[0] || y != entrance[1]) && (x == 0 || x == m - 1 || y == 0 || y == n - 1)) {
+                    return res;
+                }
+
+                for (int i = 0; i < 4; i++) {
+                    auto nx = x + dx[i];
+                    auto ny = y + dy[i];
+                    if (nx >= 0 && ny >= 0 && nx < m && ny < n && maze[nx][ny] == '.') {
+                        maze[nx][ny] = '+'; // 标记访问
+                        q.push({nx, ny});
+                    }
+                }
+            }
+            res++;
+        }
+        return -1;
+    }
+
+    int shortestBridge(vector<vector<int> > &grid) {
+        const vector<int> dx{1, -1, 0, 0};
+        const vector<int> dy{0, 0, 1, -1};
+        vector<vector<int> > dirs{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int m = grid.size();
+        int res = 0;
+        queue<pair<int, int> > q;
+        function<void(int x, int y)> dfs = [&](int x, int y) {
+            if (x < 0 || y < 0 || x >= m || y >= m || grid[x][y] != 1) {
+                return;
+            }
+            grid[x][y] = 2;
+            q.push({x, y});
+            for (auto dir: dirs) {
+                dfs(x + dir[0], y + dir[1]);
+            }
+        };
+        bool found = false;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 1 && found == false) {
+                    dfs(i, j);
+                    found = true;
+                }
+            }
+        }
+        while (!q.empty()) {
+            int size = q.size();
+
+            for (int j = 0; j < size; ++j) {
+                auto [x,y] = q.front();
+                q.pop();
+                for (int i = 0; i < 4; ++i) {
+                    auto nx = x + dx[i];
+                    auto ny = y + dy[i];
+                    if (nx < 0 || nx >= m || ny < 0 || ny >= m) {
+                        continue;
+                    }
+                    if (grid[nx][ny] == 1) {
+                        return res;
+                    }
+                    if (grid[nx][ny] == 0) {
+                        grid[nx][ny] = 2;
+                        q.push({nx, ny});
+                    }
+                }
+            }
+            res++;
+        }
+        return -1;
     }
 };
