@@ -8,6 +8,8 @@
 #include <functional>
 #include <queue>
 #include <ranges>
+#include <set>
+#include <unordered_set>
 using namespace std;
 
 class Graph {
@@ -227,5 +229,151 @@ public:
             res++;
         }
         return -1;
+    }
+
+    int minMutation(string startGene, string endGene, vector<string> &bank) {
+        if (startGene == endGene) {
+            return 0;
+        }
+        if (ranges::find(bank, endGene) == bank.end()) {
+            return -1;
+        }
+        vector<char> c{'A', 'C', 'G', 'T'};
+        queue<string> q;
+        int res = 0;
+        q.push(startGene);
+        unordered_set<string> visited;
+        visited.emplace(startGene);
+        while (!q.empty()) {
+            const int size = q.size();
+            for (int i = 0; i < size; i++) {
+                string s = q.front();
+                q.pop();
+                for (int i = 0; i < s.length(); ++i) {
+                    for (int j = 0; j < 4; ++j) {
+                        if (s[i] != c[j]) {
+                            string next = s;
+                            next[i] = c[j];
+                            if (!visited.contains(next) && ranges::find(bank, next) != bank.end()) {
+                                if (next == endGene) {
+                                    return res + 1;
+                                }
+                                q.push(next);
+                                visited.emplace(next);
+                            }
+                        }
+                    }
+                }
+            }
+            res++;
+        }
+        return -1;
+    }
+
+    bool canReach(vector<int> &arr, int start) {
+        if (arr[start] == 0) {
+            return true;
+        }
+        queue<int> q;
+        q.push(start);
+        vector<bool> visited(arr.size(), false);
+        visited[start] = true;
+        while (!q.empty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                int x = q.front();
+                q.pop();
+                int next = arr[x] + x;
+                int prev = x - arr[x];
+                if (next < arr.size() && !visited[next]) {
+                    if (arr[next] == 0) {
+                        return true;
+                    }
+                    q.push(next);
+                    visited[next] = true;
+                }
+                if (prev >= 0 && !visited[prev]) {
+                    if (arr[prev] == 0) {
+                        return true;
+                    }
+                    q.push(prev);
+                    visited[prev] = true;
+                }
+            }
+        }
+        return false;
+    }
+
+    vector<vector<int> > updateMatrix(vector<vector<int> > &mat) {
+        int n = mat.size();
+        int m = mat[0].size();
+        vector<vector<int> > dirs(n, vector<int>(m, -1));
+        vector<vector<int> > dist(n, vector<int>(m, -1));
+        queue<pair<int, int> > q;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (mat[i][j] == 0) {
+                    dist[i][j] = 0;
+                    q.emplace(i, j);
+                }
+            }
+        }
+        while (!q.empty()) {
+            auto [x, y] = q.front();
+            q.pop();
+
+            for (auto [dx, dy]: dirs) {
+                int nx = x + dx, ny = y + dy;
+                if (nx >= 0 && nx < n && ny >= 0 && ny < m && dist[nx][ny] == -1) {
+                    dist[nx][ny] = dist[x][y] + 1;
+                    q.emplace(nx, ny);
+                }
+            }
+        }
+        return dist;
+    }
+
+    struct TreeNode {
+        int val;
+        TreeNode *left;
+        TreeNode *right;
+
+        TreeNode(int x) : val(x), left(NULL), right(NULL) {
+        }
+    };
+
+    vector<int> distanceK(TreeNode *root, TreeNode *target, int k) {
+        vector<vector<int> > adj;
+        queue<TreeNode> queue1;
+        queue1.push(*root);
+        while (root != nullptr) {
+            if (root->left != nullptr) {
+                adj.push_back({root->val, root->left->val});
+                root = root->left;
+            }
+            if (root->right != nullptr) {
+                adj.push_back({root->val, root->right->val});
+                root = root->right;
+            }
+        }
+        queue <int> queue;
+        queue.push(target->val);
+        while (!queue.empty() && k != 0) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int node = queue.front();
+                queue.pop();
+                for (int value: adj[node]) {
+                    queue.push(value);
+                }
+            }
+            k--;
+        }
+        vector<int> res;
+        while (!queue.empty()) {
+            res.push_back(queue.front());
+            queue.pop();
+        }
+        return res;
     }
 };
