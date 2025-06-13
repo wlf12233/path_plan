@@ -183,10 +183,12 @@ public:
     int shortestBridge(vector<vector<int> > &grid) {
         const vector<int> dx{1, -1, 0, 0};
         const vector<int> dy{0, 0, 1, -1};
-        vector<vector<int> > dirs{{1,  0},
-                                  {-1, 0},
-                                  {0,  1},
-                                  {0,  -1}};
+        vector<vector<int> > dirs{
+            {1, 0},
+            {-1, 0},
+            {0, 1},
+            {0, -1}
+        };
         int m = grid.size();
         int res = 0;
         queue<pair<int, int> > q;
@@ -311,7 +313,7 @@ public:
     vector<vector<int> > updateMatrix(vector<vector<int> > &mat) {
         int n = mat.size();
         int m = mat[0].size();
-        vector<vector<int> > dirs(n, vector<int>(m, -1));
+        vector<pair<int, int> > dirs;
         vector<vector<int> > dist(n, vector<int>(m, -1));
         queue<pair<int, int> > q;
         for (int i = 0; i < n; ++i) {
@@ -403,6 +405,138 @@ public:
             res.push_back(nodes[q.front()]->val);
             q.pop();
         }
+        return res;
+    }
+
+    int numIslands(vector<vector<char> > &grid) {
+        vector<vector<int> > dirs{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        queue<pair<int, int> > q;
+        int n = grid.size();
+        int m = grid[0].size();
+        int res = 0;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (grid[i][j] == '1') {
+                    res++;
+                    q.push({i, j});
+                    grid[i][j] = '2';
+                    while (!q.empty()) {
+                        auto [x, y] = q.front();
+                        q.pop();
+                        for (const auto &dir: dirs) {
+                            int nx = x + dir[0], ny = y + dir[1];
+                            if (nx < 0 || nx >= n || ny < 0 || ny >= m || grid[nx][ny] != '1' || grid[nx][ny] == '2') {
+                                continue;
+                            }
+                            grid[nx][ny] = '2';
+                            q.push({nx, ny});
+                        }
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    int maxAreaOfIsland(vector<vector<int> > &grid) {
+        queue<pair<int, int> > q;
+        const int n = grid.size();
+        const int m = grid[0].size();
+        vector<vector<int> > dirs{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int res = 0;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (grid[i][j] == 1) {
+                    int temp = 0;
+                    q.push({i, j});
+                    grid[i][j] = 2;
+                    while (!q.empty()) {
+                        auto [x, y] = q.front();
+                        q.pop();
+                        temp++;
+                        for (const auto &dir: dirs) {
+                            int nx = x + dir[0], ny = y + dir[1];
+                            if (nx < 0 || nx >= n || ny < 0 || ny >= m || grid[nx][ny] != 1 || grid[nx][ny] == 2) {
+                                continue;
+                            }
+                            grid[nx][ny] = 2;
+                            q.push({nx, ny});
+                        }
+                    }
+                    res = max(res, temp);
+                }
+            }
+        }
+        return res;
+    }
+
+    int shortestPathBinaryMatrix(vector<vector<int> > &grid) {
+        int n = grid.size();
+        if (grid[0][0] == 1) {
+            return -1;
+        }
+        vector<pair<int, int> > dirs{{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, -1}, {-1, 1}, {1, 1}, {-1, -1}};
+        queue<pair<int, int> > q;
+        int res = 0;
+        q.push({0, 0});
+        vector<vector<bool> > visited(n, vector<bool>(n, false));
+        while (!q.empty()) {
+            int size = q.size();
+            for (int i = 0; i < size; ++i) {
+                auto [x, y] = q.front();
+                q.pop();
+                if (x == n - 1 && y == n - 1) {
+                    return res + 1;
+                }
+                for (const auto &dir: dirs) {
+                    int nx = x + dir.first, ny = y + dir.second;
+                    if (nx < 0 || ny < 0 || nx >= n || ny >= n || visited[nx][ny] || grid[nx][ny] != 0) {
+                        continue;
+                    }
+                    q.push({nx, ny});
+                    visited[nx][ny] = true;
+                }
+            }
+            res++;
+        }
+        return -1;
+    }
+
+    int closedIsland(vector<vector<int> > &grid) {
+        vector<vector<int> > dirs{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        queue<pair<int, int> > q;
+        int n = grid.size();
+        int m = grid[0].size();
+        int res = 0;
+        for (int i = 1; i < n - 1; ++i) {
+            for (int j = 1; j < m - 1; ++j) {
+                if (grid[i][j] == 0) {
+                    bool isClosed = true;
+                    q.push({i, j});
+                    grid[i][j] = 2;
+
+                    while (!q.empty()) {
+                        auto [x, y] = q.front();
+                        q.pop();
+                        if (x == n - 1 || y == m - 1 || x == 0 || y == 0) {
+                            isClosed = false;
+                        }
+                        for (const auto &dir: dirs) {
+                            int nx = x + dir[0], ny = y + dir[1];
+                            if (nx < 0 || nx >= n || ny < 0 || ny >= m || grid[nx][ny] != 0 || grid[nx][ny] == 2) {
+                                continue;
+                            }
+                            grid[nx][ny] = 2;
+                            q.push({nx, ny});
+                        }
+                    }
+                    if (isClosed) {
+                        res++;
+                    }
+                }
+            }
+        }
+
         return res;
     }
 };
