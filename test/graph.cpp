@@ -539,4 +539,162 @@ public:
 
         return res;
     }
+
+    int numEnclaves(vector<vector<int> > &grid) {
+        vector<vector<int> > dirs{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        queue<pair<int, int> > q;
+        int n = grid.size();
+        int m = grid[0].size();
+        int res = 0;
+        for (int i = 1; i < n - 1; ++i) {
+            for (int j = 1; j < m - 1; ++j) {
+                if (grid[i][j] == 1) {
+                    int temp = 0;
+                    bool isClosed = true;
+                    q.emplace(i, j);
+                    grid[i][j] = 2;
+
+                    while (!q.empty()) {
+                        auto [x, y] = q.front();
+                        q.pop();
+                        temp++;
+                        if (x == n - 1 || y == m - 1 || x == 0 || y == 0) {
+                            isClosed = false;
+                        }
+                        for (const auto &dir: dirs) {
+                            int nx = x + dir[0], ny = y + dir[1];
+                            if (nx < 0 || nx >= n || ny < 0 || ny >= m || grid[nx][ny] != 1 || grid[nx][ny] == 2) {
+                                continue;
+                            }
+                            grid[nx][ny] = 2;
+                            q.emplace(nx, ny);
+                        }
+                    }
+                    if (isClosed) {
+                        res += temp;
+                    }
+                }
+            }
+        }
+
+        return res;
+    }
+
+    int findJudge(int n, vector<vector<int> > &trust) {
+        vector<int> outdegree(n + 1, 0);
+        vector<int> indegree(n + 1, 0);
+
+        for (auto value: trust) {
+            outdegree[value[0]]++;
+
+            indegree[value[1]]++;
+        }
+        // for (int i = 1; i <= n; ++i) {
+        //     const auto &item = trust[i];
+        //     outdegree[item[0]]++;
+        // }
+        for (int i = 1; i <= n; i++) {
+            if (outdegree[i] == 0 && indegree[i] == n) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    int minReorder(int n, vector<vector<int> > &connections) {
+        vector<vector<int> > adj(n);
+        vector<vector<int> > neighbors(n);
+        for (auto connection: connections) {
+            adj[connection[0]].push_back(connection[1]);
+            neighbors[connection[0]].push_back(connection[1]);
+            neighbors[connection[1]].push_back(connection[0]);
+        }
+        queue<int> q;
+        q.push(0);
+        int res = 0;
+        vector<bool> visited(n, false);
+        visited[0] = true;
+        while (!q.empty()) {
+            auto cur = q.front();
+            q.pop();
+
+            for (int neighbor: neighbors[cur]) {
+                if (visited[neighbor]) { continue; }
+
+                if (std::find(adj[cur].begin(), adj[cur].end(), neighbor) != adj[cur].end()) {
+                    res++;
+                }
+
+                visited[neighbor] = true;
+                q.push(neighbor);
+            }
+        }
+        return res;
+    }
+
+    vector<vector<int> > allPathsSourceTarget(vector<vector<int> > &graph) {
+        const int n = graph.size();
+        vector<vector<int> > res;
+        vector<bool> visited(n, false);
+        vector<int> temp;
+        function<void(int)> dfs = [&](const int cur) {
+            if (cur == n - 1) {
+                temp.push_back(cur);
+                res.push_back(temp);
+                return;
+            }
+            if (visited[cur]) { return; }
+            visited[cur] = true;
+            temp.push_back(cur);
+            for (const int value: graph[cur]) {
+                dfs(value);
+                temp.pop_back();
+                visited[value] = false;
+            }
+        };
+        dfs(0);
+        return res;
+    }
+
+    vector<int> findSmallestSetOfVertices(int n, vector<vector<int> > &edges) {
+        vector<int> res;
+        vector<bool> visited(n, false);
+        vector<int> indegree(n, 0);
+        for (auto edge: edges) {
+            int from = edge[0];
+            int to = edge[1];
+            indegree[to]++;
+        }
+        for (int i = 0; i < n; ++i) {
+            if (indegree[i] == 0) {
+                res.push_back(i);
+            }
+        }
+        return res;
+    }
+
+    int maximalNetworkRank(int n, vector<vector<int> > &roads) {
+        int res = 0;
+        vector<int> indegree(n, 0);
+        vector<vector<int> > adj(n);
+        for (auto edge: roads) {
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
+            int from = edge[0];
+            int to = edge[1];
+            indegree[to]++;
+            indegree[from]++;
+        }
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                int temp = indegree[i];
+                temp += indegree[j];
+                if (ranges::find(adj[i], j) != adj[i].end()) {
+                    temp--;
+                }
+                res = max(res, temp);
+            }
+        }
+        return res;
+    }
 };
