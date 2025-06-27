@@ -697,4 +697,37 @@ public:
         }
         return res;
     }
+
+    bool isBipartite(vector<vector<int> > &graph) {
+        int n = graph.size();
+        vector<int> color(n, -1);
+        vector<bool> visited(n, false);
+        function<bool(int)> dfs = [&](const int cur) {
+            visited[cur] = true;
+            for (int neighbor: graph[cur]) {
+                if (visited[neighbor]) {
+                    if (color[neighbor] == color[cur]) {
+                        return false;
+                    }
+                } else {
+                    visited[neighbor] = true;
+                    color[neighbor] = color[cur]^1;
+                    if (!dfs(neighbor)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        };
+        for (int i = 0; i < n; ++i) {
+            if (visited[i]) {
+                continue;
+            }
+            visited[i] = true;
+            color[i] = 0;
+            if (!dfs(i)) {
+                return false;
+            }
+        }
+    }
 };
