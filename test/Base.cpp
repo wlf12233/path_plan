@@ -57,11 +57,11 @@ void printName(Base &base) {
     std::cout<<base.foo();
 }
 
-int main() {
-    Derived b(1, "derived");
-    Derived2 b1(1, "derived");
-    // Base *d = &b1;
-    // d->foo();
-    printName(b1);
-    return 0;
-}
+// int main() {
+//     Derived b(1, "derived");
+//     Derived2 b1(1, "derived");
+//     // Base *d = &b1;
+//     // d->foo();
+//     printName(b1);
+//     return 0;
+// }
