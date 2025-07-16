@@ -79,6 +79,7 @@ public:
         edges[v].push_back({u, 0, edges[u].size() - 1});
     }
 
+    //FF
     int dfs(int v, int t, int f) {
         if (v == t) return f;
         visited[v] = true;
@@ -94,7 +95,7 @@ public:
         }
         return 0;
     }
-
+    //Edmonds-Karp
     int bfs(int s, int t, std::vector<int> &parent, std::vector<int> &parent_edge) {
         std::queue<int> q;
         q.push(s);

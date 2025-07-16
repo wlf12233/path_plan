@@ -54,7 +54,7 @@ public:
 };
 
 void printName(Base &base) {
-    std::cout<<base.foo();
+    // std::cout<<base.foo();
 }
 
 // int main() {
