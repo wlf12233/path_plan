@@ -6,6 +6,7 @@ import math
 from matplotlib.patches import Polygon, Circle
 
 
+# 射线法
 def point_in_polygon(point, polygon):
     """
     判断一个点是否在多边形内
@@ -30,6 +31,33 @@ def point_in_polygon(point, polygon):
         p1x, p1y = p2x, p2y
 
     return inside
+
+
+# 半平面法
+def point_in_polygon(point, polygon):
+    """
+    判断一个点是否在多边形内
+    :param point: (x, y)
+    :param polygon: [(x1, y1), (x2, y2), ...]
+    :return: True or False
+    """
+    x, y = point
+    n = len(polygon)
+    sign = 0
+    for p in n:
+        x1, y1 = p[n]['x'], p[n]['y']
+        x2, y2 = p[(n + 1) % n]['x'], p[(n + 1) % n]['y']
+        ab = (x2 - x1, y2 - y1)
+        ap = (x - x1, y - y1)
+        cross = ab[0] * ap[1] - ab[1] * ap[0]
+        if cross != 0:
+            cross_sign = 1 if cross > 0 else -1
+            if sign == 0:
+                sign = cross_sign  # 初始化符号
+            elif cross_sign != sign:
+                return False  # 不同符号，点在边的外侧
+
+    return True
 
 
 def circle_intersects_segment(pointA, pointB, pointC, radius):
