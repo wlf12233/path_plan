@@ -50,6 +50,7 @@ void bubbleSort(Iterator begin, Iterator end, Compare compare) {
                 sorted = true;
             }
         }
+        std::sort (begin, end, sorted);
         if (!sorted) {
             break;
         }

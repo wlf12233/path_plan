@@ -58,10 +58,10 @@ void printName(Base &base) {
 }
 
 // int main() {
-//     Derived b(1, "derived");
-//     Derived2 b1(1, "derived");
-//     // Base *d = &b1;
+//     Base* base(0);
+//     Derived b1(1, "derived1");
+//     Derived d = dynamic_cast<Derived*>(base);
 //     // d->foo();
-//     printName(b1);
+//     // printName(b2);
 //     return 0;
 // }

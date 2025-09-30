@@ -8,7 +8,9 @@
   "ExpandedNodes": [
     "",
     "\\include",
-    "\\src"
+    "\\src",
+    "\\test"
   ],
+  "SelectedNode": "\\test\\mulargs.cpp",
   "PreviewInSolutionExplorer": false
 }
