@@ -58,7 +58,8 @@ void printName(Base &base) {
 }
 
 // int main() {
-//     Base* base(0);
+//     const Base& base = new Base(0);
+//     Derived* d1 = new Base(0);
 //     Derived b1(1, "derived1");
 //     Derived d = dynamic_cast<Derived*>(base);
 //     // d->foo();
