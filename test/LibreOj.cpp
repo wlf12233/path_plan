@@ -32,18 +32,3 @@ vector<ll> dijkstra(int s, vector<vector<pair<int, int> > > &adj) {
     return distance;
 }
 
-// int main() {
-//     int m, n, s, t;
-//     cin >> n >> m >> s >> t;
-//     vector<vector<pair<int, int> > > adj(n + 1);
-//     for (int i = 0; i < m; ++i) {
-//         int u, v;
-//         ll w;
-//         std::cin >> u >> v >> w;
-//         adj[u].emplace_back(v, w);
-//         adj[v].emplace_back(u, w);
-//     }
-//     const auto dist = dijkstra(s, adj);
-//     std::cout << dist[t] << '\n';
-//     return 0;
-// }

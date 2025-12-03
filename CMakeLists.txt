@@ -12,6 +12,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #file(GLOB TEST ${PROJECT_SOURCE_DIR}/test/*.cpp)
 #主程序库
 file(GLOB_RECURSE MAIN_SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+list(REMOVE_ITEM MAIN_SOURCES ${PROJECT_SOURCE_DIR}/src/main.cpp)
 
 
 #设置项目的可执行文件路径
@@ -30,9 +31,6 @@ add_executable(path_plan ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 target_link_libraries(path_plan PRIVATE path_plan_lib)
 
 enable_testing()
-file(GLOB_RECURSE test_SOURCES ${PROJECT_SOURCE_DIR}/test/*.cpp)
-add_executable(runTests ${test_SOURCES})
-target_link_libraries(runTests PRIVATE path_plan_lib)
-add_test(NAME runTests COMMAND runTests)
+add_subdirectory(test)
 
 

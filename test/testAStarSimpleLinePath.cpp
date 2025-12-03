@@ -30,8 +30,3 @@ void testAstarSimpleLinePath() {
     std::cout << diff.count() << " seconds\n";
 }
 
-// int main(int argc, char *argv[]) {
-//     testAstarSimpleLinePath();
-//     return 0;
-// }
-

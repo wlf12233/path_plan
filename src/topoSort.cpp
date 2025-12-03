@@ -67,16 +67,3 @@ public:
         return res;
     }
 };
-// int main() {
-//     int V = 6;
-//     std::vector<std::vector<int>> adj(V);
-//     adj[5] = {2, 0};
-//     adj[4] = {0, 1};
-//     adj[2] = {3};
-//     adj[3] = {1};
-//     topoSort topoSort;
-//     auto topo = topoSort.topologicalSortWithDFS(V, adj);
-//     for (auto v: topo) {
-//         std::cout << v << " ";
-//     }
-// }

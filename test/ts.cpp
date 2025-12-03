@@ -1,10 +1,10 @@
 //
 // Created by seer on 2025/7/15.
 //
-#include <common.h>
 #include <iostream>
+#include "../include/common.h"
+#include "../cmake-build-debug-visual-studio/_deps/googletest-src/googletest/include/gtest/gtest.h"
 
-#include "../include/Timer.h"
 using namespace std;
 
 namespace lift {
@@ -44,7 +44,6 @@ void pass(T &&v) {
     std::cout << "普通传参:";
     reference(v); // 始终调用 reference(int&)
 }
-
 // int main() {
 //     for (int i = 0; i < 2; ++i) {
 //         if (i == 1)

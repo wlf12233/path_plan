@@ -20,16 +20,3 @@ int fibonacci2(int n) {
     }
     return fibonacci2(n - 1) + fibonacci2(n - 2);
 }
-
-// int main() {
-//     Timer timer;
-//     for (int i = 0; i < 50; ++i) {
-//         std::cout << fibonacci1(i) << " ";
-//     }
-//     std::cout << timer.elapsed() << std::endl;
-//     timer.reset();
-//     for (int i = 0; i < 50; ++i) {
-//         std::cout << fibonacci2(i) << " ";
-//     }
-//     std::cout << timer.elapsed() << std::endl;
-// }

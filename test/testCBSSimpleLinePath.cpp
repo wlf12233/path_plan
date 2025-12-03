@@ -34,7 +34,3 @@ void testCBSSimpleLinePath() {
     }
 
 }
-// int main() {
-//     testCBSSimpleLinePath();
-//     return 0;
-// }

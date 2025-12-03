@@ -8,8 +8,3 @@ void printAll(Args... args) {
     (std::cout << ... << args);
     std::cout << std::endl;
 }
-int main() {
-    printAll(1, 2, 3);
-    std::cout << _MSVC_LANG << std::endl;
-
-}
