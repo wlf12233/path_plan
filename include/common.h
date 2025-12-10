@@ -18,4 +18,5 @@
 #include <algorithm>
 #include <functional>
 #include <Timer.h>
+#include <unordered_map>
 #endif //COMMON_H
