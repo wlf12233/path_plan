@@ -9,18 +9,18 @@
 #include "Types.h"
 
 
-struct Node {
+struct Point {
     int x, y; // 位置
     int g_cost; //从起点到当前节点的代价
     int h_cost; //启发式代价
     int f_cost() const { return h_cost + g_cost; };
-    std::shared_ptr<Node> parent;
+    std::shared_ptr<Point> parent;
 
-    Node(int _x, int _y, int _gcost, int _hcost, std::shared_ptr<Node> parent = nullptr);
+    Point(int _x, int _y, int _gcost, int _hcost, std::shared_ptr<Point> parent = nullptr);
 };
 
 struct CompareNode {
-    bool operator()(const std::shared_ptr<Node> &p1, const std::shared_ptr<Node> &p2) const {
+    bool operator()(const std::shared_ptr<Point> &p1, const std::shared_ptr<Point> &p2) const {
         return p1->f_cost() > p2->f_cost();
     }
 };
@@ -48,7 +48,6 @@ public:
                                                                                 const std::pair<int, int> &start,
                                                                                 const std::pair<int, int> &goal,
                                                                                 const std::vector<Constraint> &constraints) const;
-
 private:
     int rows, cols;
 

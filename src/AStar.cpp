@@ -7,7 +7,7 @@
 #include "DirectedGraph.h"
 
 
-Node::Node(int _x, int _y, int _gcost, int _hcost, std::shared_ptr<Node> parent)
+Point::Point(int _x, int _y, int _gcost, int _hcost, std::shared_ptr<Point> parent)
     : x(_x), y(_y), g_cost(_gcost), h_cost(_hcost), parent(std::move(parent)) {
 }
 
@@ -25,15 +25,15 @@ std::optional<std::vector<std::pair<int, int> > > AStar::find_path_1(
     std::vector visited(rows, std::vector(cols, false));
 
     // 使用智能指针管理节点
-    std::priority_queue<std::shared_ptr<Node>, std::vector<std::shared_ptr<Node> >, CompareNode> open_list;
+    std::priority_queue<std::shared_ptr<Point>, std::vector<std::shared_ptr<Point> >, CompareNode> open_list;
 
-    std::unordered_map<int, std::shared_ptr<Node> > all_nodes; // 记录所有创建的节点
+    std::unordered_map<int, std::shared_ptr<Point> > all_nodes; // 记录所有创建的节点
 
     // 计算哈希键
     auto get_hash = [this](int x, int y) { return x * cols + y; };
 
     // 创建起点
-    const auto start_node = std::make_shared<Node>(start.first, start.second, 0,
+    const auto start_node = std::make_shared<Point>(start.first, start.second, 0,
                                                    heuristic(start.first, start.second, goal.first, goal.second));
     open_list.push(start_node);
 
@@ -75,7 +75,7 @@ std::optional<std::vector<std::pair<int, int> > > AStar::find_path_1(
             int h_new_cost = heuristic(next_x, next_y, goal.first, goal.second);
 
 
-            auto neighbor = std::make_shared<Node>(next_x, next_y, g_new_cost, h_new_cost, cur_node);
+            auto neighbor = std::make_shared<Point>(next_x, next_y, g_new_cost, h_new_cost, cur_node);
             open_list.push(neighbor);
             all_nodes.emplace(hash, neighbor);
         }
@@ -93,7 +93,7 @@ std::optional<std::vector<std::pair<int, int> > > AStar::find_path_2(const std::
     std::vector visited(rows, std::vector(cols, false));
 
     // 使用智能指针管理节点
-    std::priority_queue<std::shared_ptr<Node>, std::vector<std::shared_ptr<Node> >, CompareNode> open_list;
+    std::priority_queue<std::shared_ptr<Point>, std::vector<std::shared_ptr<Point> >, CompareNode> open_list;
 
     // std::unordered_map<int, std::shared_ptr<Node> > all_nodes; // 记录所有创建的节点
     //
@@ -101,7 +101,7 @@ std::optional<std::vector<std::pair<int, int> > > AStar::find_path_2(const std::
     // auto get_hash = [this](int x, int y) { return x * cols + y; };
 
     // 创建起点
-    const auto start_node = std::make_shared<Node>(start.first, start.second, 0,
+    const auto start_node = std::make_shared<Point>(start.first, start.second, 0,
                                                    heuristic(start.first, start.second, goal.first, goal.second));
     open_list.push(start_node);
 
@@ -143,7 +143,7 @@ std::optional<std::vector<std::pair<int, int> > > AStar::find_path_2(const std::
             int h_new_cost = heuristic(next_x, next_y, goal.first, goal.second);
 
 
-            auto neighbor = std::make_shared<Node>(next_x, next_y, g_new_cost, h_new_cost, cur_node);
+            auto neighbor = std::make_shared<Point>(next_x, next_y, g_new_cost, h_new_cost, cur_node);
             open_list.push(neighbor);
             // all_nodes.emplace(hash, neighbor);
         }
@@ -205,8 +205,8 @@ std::optional<std::vector<std::pair<int, int> > > AStar::find_path_with_constrai
 
     std::set<std::tuple<int, int, int> > visited;
 
-    std::priority_queue<std::shared_ptr<Node>, std::vector<std::shared_ptr<Node> >, CompareNode> open_list;
-    const auto start_node = std::make_shared<Node>(start.first, start.second, 0,
+    std::priority_queue<std::shared_ptr<Point>, std::vector<std::shared_ptr<Point> >, CompareNode> open_list;
+    const auto start_node = std::make_shared<Point>(start.first, start.second, 0,
                                                    heuristic(start.first, start.second, goal.first, goal.second));
     open_list.push(start_node);
     while (!open_list.empty()) {
@@ -247,7 +247,7 @@ std::optional<std::vector<std::pair<int, int> > > AStar::find_path_with_constrai
                 continue;
             }
             int g_new_cost = cur_node->g_cost + 1;
-            auto neighbor = std::make_shared<Node>(next_x, next_y, g_new_cost, heuristic(next_x, next_y, goal.first, goal.second),
+            auto neighbor = std::make_shared<Point>(next_x, next_y, g_new_cost, heuristic(next_x, next_y, goal.first, goal.second),
                                                    cur_node);
             open_list.push(neighbor);
         }

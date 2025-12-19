@@ -6,19 +6,17 @@
 #define PATH_PLAN_GRAPH_H
 #include <common.h>
 
+struct Edge {
+    int to;
+    double weight;
+};
+
+struct Point {
+    int id;
+    std::vector<Edge> edges;
+};
 class Graph {
-    struct Edge {
-        int from;
-        int to;
-        double weight;
-    };
-
-    struct Node {
-        int id;
-        std::vector<Edge> edges;
-    };
-
-    std::vector<Node> graph;
+    std::vector<Point> graph;
 
 public:
     void addEdge(int u, int v);
@@ -30,6 +28,10 @@ public:
     void changeWeight(int u, int v, double weight);
 
     const std::vector<Edge> &getNeighbors(int u) const;
+
+    [[nodiscard]] const std::vector<Point> &getGraph() const {
+        return graph;
+    }
 
     void printGraph();
 };
