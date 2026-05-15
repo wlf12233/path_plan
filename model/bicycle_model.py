@@ -1,13 +1,12 @@
-from math import cos
-
 import numpy as np
 import matplotlib.pyplot as plt
 
 
 # x = v * cos(yaw)
 # y = v * sin(yaw)
-# yam = v/L * tan(delta)
+# yaw = v/L * tan(delta)
 # v = a
+# 曲率 = tan(delta)/L
 
 # x：车辆位置的 x 坐标
 # y：车辆位置的 y 坐标

@@ -51,10 +51,10 @@ class AstarPlanner:
     def plan(self, start, goal):
         if not self.grid.is_free(start[0], start[1]):
             return None, set()
-        if start == goal:
-            return [start], set(start)
         if not self.grid.is_free(goal[0], goal[1]):
-            return [], set()
+            return None, set()
+        if start == goal:
+            return [start], {start}
         open_list = []
         came_from = {}
         close_set = set()
@@ -67,6 +67,7 @@ class AstarPlanner:
             _, current = heapq.heappop(open_list)
             if current in close_set:
                 continue
+            close_set.add(current)
             if current == goal:
                 return self.reconstruct_path(current, came_from), set(g_cost.keys())
             for dx, dy, cost in motions:
