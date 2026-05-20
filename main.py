@@ -6,6 +6,7 @@ from model.bicycle_model import State, update
 from smoother.path_utils import remove_duplicate_points, simplify_path, path_to_xy
 from smoother.spline_smoother import smooth_path, resample_path, compute_yaw
 from planer.astar import AstarPlanner
+from planer.hybrid_astar import HybridAstarPlanner
 
 
 def create_map():
@@ -132,13 +133,17 @@ def simulate(path_x, path_y, path_yaw, L=2.5, dt=0.1, target_v=1.0, k=0.3, Ld0=2
 def main():
     grid_map = create_map()
     start = (0, 0)
-    goal = (25, 20)
-    planner = AstarPlanner(grid_map)
+    goal = (25, 20,10)
+    # planner = AstarPlanner(grid_map)
+    planner = HybridAstarPlanner(grid_map)
     path, visited = planner.plan(start, goal)
     if path is None or len(path) == 0:
         print("No path found")
         return
     print("节点数: ", len(path))
+    visited = None
+    plot_result(grid_map, start, goal, path=path, smooth_path=None, expanded=visited, frontier=None)
+
     # 去重
     raw_path = remove_duplicate_points(path)
 
@@ -163,8 +168,7 @@ def main():
 
     print(f"Sim time: {ts[-1]:.2f}s, end pos=({xs[-1]:.2f},{ys[-1]:.2f}), "
           f"goal=({smooth_x[-1]:.2f},{smooth_y[-1]:.2f})")
-    plot_tracking(grid_map, smooth_x, smooth_y, yaw, xs, ys, yaws, vs, deltas, ts)
-
+    # plot_tracking(grid_map, smooth_x, smooth_y, yaw, xs, ys, yaws, vs, deltas, ts)
     # plot_result(grid_map, start, goal, path=path, smooth_path=smooth_xy, expanded=visited, frontier=None)
 
 

@@ -4,7 +4,6 @@ L = 2.5
 dt = 0.1
 max_steer = np.radians(30)
 
-
 def find_nearest_point(x, y, path_x, path_y, last_idx=0, window=30):
     px = np.asarray(path_x[last_idx:window + last_idx])
     py = np.asarray(path_y[last_idx:window + last_idx])
