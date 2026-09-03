@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# https://zhuanlan.zhihu.com/p/718495398
 
 # x = v * cos(yaw)
 # y = v * sin(yaw)
