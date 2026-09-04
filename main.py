@@ -4,6 +4,7 @@ from map.grid_map import GridMap
 from controller.pure_pursuit import pure_pursuit_control
 from model.bicycle_model import State, update
 from planer.rrt import RRTPlaner
+from planer.rrtStar import RRTStarPlaner
 from smoother.path_utils import remove_duplicate_points, simplify_path, path_to_xy
 from smoother.spline_smoother import smooth_path, resample_path, compute_yaw
 from planer.astar import AstarPlanner
@@ -136,9 +137,12 @@ def main():
     start = (0, 0)
     goal = (25, 20)
     # planner = AstarPlanner(grid_map)
+    # path,vis = planner.plan(start, goal)
     # planner = HybridAstarPlanner(grid_map)
-    planner = RRTPlaner(grid_map)
-    path, visited = planner.rrt(start, goal)
+    planner = RRTStarPlaner(grid_map)
+    path, visited = planner.rrt_star(start, goal)
+    # planner = RRTPlaner(grid_map)
+    # path,vis = planner.rrt(start, goal)
     if path is None or len(path) == 0:
         print("No path found")
         return

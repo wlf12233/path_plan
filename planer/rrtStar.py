@@ -2,20 +2,15 @@ from dataclasses import dataclass
 
 import numpy as np
 
-# A*、Dijkstra 通常需要先把环境离散成网格或图，而 RRT 可以直接在连续状态空间中采样
-# RRT 最重要的优势之一，是它比较适合高维路径规划。例如六自由度机械臂的状态为：q=[q_1,q_2,q_3,q_4,q_5,q_6]^T
-# 如果每个关节角离散为 100 个值，网格规模为：100^6=10^{12}，网格搜索很难直接处理这种规模，而 RRT 只采样实际需要探索的状态，不需要枚举整个空间。
-# 容易加入运动学或动力学约束
-# 空间探索速度快
-# 劣势
-# 生成的路径通常曲折、不平滑
-# 随机性导致结果不稳定
-# 基本 RRT 不保证路径最优
+
+# RRT* 在邻域内选择代价更低的父节点，重新连接已有节点（Rewire）
+# RRT 找到一条可行路线后即可返回；RRT* 在给定迭代次数内持续优化，并返回当前找到的代价最小路线。
 @dataclass
 class RRTConfig:
-    max_iter: int = 1000
+    max_iter: int = 10000
     step_size: float = 1.0
     goal_bias: float = 0.10
+    neighborhood_radius: float = 5.0  # 邻域阈值
 
 
 @dataclass
@@ -23,10 +18,12 @@ class Node:
     # Coordinates use the GridMap convention: row, column.
     x: int
     y: int
+    cost: float = 0.0
     parent: object = None
 
-#快速拓展随机数
-class RRTPlaner:
+
+# 快速拓展随机数
+class RRTStarPlaner:
     def __init__(self, grid_map, config=None, rng=None):
         self.map = grid_map
         self.config = config if config is not None else RRTConfig()
@@ -39,6 +36,8 @@ class RRTPlaner:
             raise ValueError("step_size must be at least one grid cell")
         if not 0.0 <= self.config.goal_bias <= 1.0:
             raise ValueError("goal_bias must be between 0 and 1")
+        if self.config.neighborhood_radius <= 0.0:
+            raise ValueError("neighborhood_radius must be positive")
 
     @staticmethod
     def distance(p1, p2):
@@ -54,6 +53,23 @@ class RRTPlaner:
             int(self.rng.integers(0, self.map.height)),
             int(self.rng.integers(0, self.map.width)),
         )
+
+    # 树刚开始节点少，需要看较大范围
+    # 节点变多后，局部节点密集，只需要看附近节点
+    def get_neighbor_hood(self):
+        return min(self.config.neighborhood_radius,
+                   2.0 * self.config.step_size * np.sqrt(np.log(len(self.nodes) + 1 / len(self.nodes))))
+
+    def get_neighbor(self, point):
+        neighbors = [node for node in self.nodes if self.distance(node, point) <= self.get_neighbor_hood()]
+        return neighbors
+
+    def update_descendant_costs(self, parent):
+        """Propagate a changed cost through the current tree."""
+        for child in self.nodes:
+            if child.parent is parent:
+                child.cost = parent.cost + self.distance(parent, child)
+                self.update_descendant_costs(child)
 
     def steer(self, nearest, target):
         distance = self.distance(nearest, target)
@@ -95,9 +111,9 @@ class RRTPlaner:
         path.reverse()
         return path
 
-    def rrt(self, start, goal):
-        start_node = Node(start[0], start[1])
-        goal_node = Node(goal[0], goal[1])
+    def rrt_star(self, start, goal):
+        start_node = Node(start[0], start[1], 0)
+        goal_node = Node(goal[0], goal[1], 0)
         if not self.map.is_free(start_node.x, start_node.y):
             return None, []
         if not self.map.is_free(goal_node.x, goal_node.y):
@@ -113,13 +129,43 @@ class RRTPlaner:
             new_point = self.steer(nearest_point, sampled_point)
             if new_point is None or not self.edge_is_free(nearest_point, new_point):
                 continue
-
-            new_point.parent = nearest_point
+            parent = nearest_point
+            neighbors = self.get_neighbor(new_point)
+            for neighbor in neighbors:
+                candidate_cost = neighbor.cost + self.distance(neighbor, new_point)
+                if (
+                        self.edge_is_free(neighbor, new_point)
+                        and candidate_cost < parent.cost + self.distance(parent, new_point)
+                ):
+                    parent = neighbor
+            new_point.parent = parent
+            new_point.cost = self.distance(new_point, parent) + parent.cost
             self.nodes.append(new_point)
-            if self.distance(new_point, goal_node) <= self.config.step_size:
-                if self.edge_is_free(new_point, goal_node):
-                    goal_node.parent = new_point
-                    self.nodes.append(goal_node)
-                    return self.extract(goal_node), [(node.x, node.y) for node in self.nodes]
 
+            for neighbor in neighbors:
+                new_cost = new_point.cost + self.distance(neighbor, new_point)
+                if (
+                        neighbor is not parent
+                        and self.edge_is_free(new_point, neighbor)
+                        and neighbor.cost > new_cost
+                ):
+                    neighbor.parent = new_point
+                    neighbor.cost = new_cost
+                    self.update_descendant_costs(neighbor)
+
+        goal_candidates = [
+            node for node in self.nodes
+            if self.distance(node, goal_node) <= self.config.step_size
+               and self.edge_is_free(node, goal_node)
+        ]
+        if goal_candidates:
+            best_node = min(
+                goal_candidates,
+                key=lambda node: node.cost + self.distance(node, goal_node),
+            )
+            goal_node.parent = best_node
+            goal_node.cost = best_node.cost + self.distance(best_node, goal_node)
+            self.nodes.append(goal_node)
+            print(f"cost:{goal_node.cost}")
+            return self.extract(goal_node), [(node.x, node.y) for node in self.nodes]
         return None, [(node.x, node.y) for node in self.nodes]
